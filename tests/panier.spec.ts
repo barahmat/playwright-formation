@@ -1,43 +1,34 @@
 import { test, expect } from '@playwright/test'
+import { LoginPage } from '../pages/login.page';
+import { InventoryPage } from '../pages/inventory.page';
+
 
 test("ajout d'un produit au panier", async ({ page }) => {
-    await page.goto('https://www.saucedemo.com');
+   const loginPage = new LoginPage(page);
+   const inventoryPage = new InventoryPage(page);
 
-    await page.getByPlaceholder('Username').fill('standard_user');
-    await page.getByPlaceholder('Password').fill('secret_sauce');
-    await page.getByRole('button', {name:'Login'}).click();
+    await loginPage.goto();
+    await loginPage.seConnecter('standard_user','secret_sauce');
 
-    //il y a 6 boutons "Add to cart" sur le catalogue
-    await expect(page.getByRole('button', {name: /add to cart/i})).toHaveCount(6);
-
-    //on ajoute le 1er produit
-    await page.getByRole('button', {name: /add to cart/i}).first().click();
-
-    //Le badge du panier affiche "1"
-    await expect(page.locator('[data-test="shopping-cart-badge"]')).toHaveText('1');
+    await expect(inventoryPage.locators.boutonAjout).toHaveCount(6);
+    await inventoryPage.ajouterPremierProduit();
+    await expect(inventoryPage.locators.badgePanier).toHaveText('1');
 
 });
 
 test("suppression d'un produit du panier", async ({ page }) => {
-    await page.goto('https://www.saucedemo.com');
+    const loginPage = new LoginPage(page);
+    const inventoryPage = new InventoryPage(page);
 
-    await page.getByPlaceholder('Username').fill('standard_user');
-    await page.getByPlaceholder('Password').fill('secret_sauce');
-    await page.getByRole('button', {name:'Login'}).click();
+    await loginPage.goto();
+    await loginPage.seConnecter('standard_user','secret_sauce');
 
-    //on ajoute le 1er produit
-    await page.getByRole('button', {name: /add to cart/i}).first().click();
+     await inventoryPage.ajouterPremierProduit();
 
-    //Le badge du panier affiche "1"
-    await expect(page.locator('[data-test="shopping-cart-badge"]')).toHaveText('1');
+    await expect(inventoryPage.locators.badgePanier).toHaveText('1');
 
-    //on supprime le 1er produit
-    await page.getByRole('button', {name: /remove/i}).click();
-
-    // le badge du panier a disparu
-    await expect(page.locator('[data-test="shopping-cart-badge"]')).toBeHidden();
-
-
-    //il y a 6 boutons "Add to cart" sur le catalogue
-    await expect(page.getByRole('button', {name: /add to cart/i})).toHaveCount(6);
+    await inventoryPage.supprimerPremierProduit();
+    
+    await expect(inventoryPage.locators.badgePanier).toBeHidden();
+    await expect(inventoryPage.locators.boutonAjout).toHaveCount(6);
 });
