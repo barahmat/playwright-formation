@@ -1,20 +1,12 @@
-import { test, expect } from '@playwright/test'
-import { LoginPage } from '../pages/login.page';
+import { test, expect } from './fixtures';
 
 
-test('connexion avec des identifiants valides', async ({ page }) => {
-    const loginPage = new LoginPage(page);
-
-    await loginPage.goto();
-    await loginPage.seConnecter('standard_user','secret_sauce');
-
-
-    await expect(page).toHaveURL(/inventory/);
+test('connexion avec des identifiants valides', async ({ pageConnectee }) => {
+    await expect(pageConnectee).toHaveURL(/inventory/);
 });
 
 
-test("connexion bloquée pour l'utilisateur verrouillé", async ({ page }) => {
-    const loginPage = new LoginPage(page);
+test("connexion bloquée pour l'utilisateur verrouillé", async ({ loginPage }) => {
     await loginPage.goto();
     await loginPage.seConnecter('locked_out_user','secret_sauce');
 
