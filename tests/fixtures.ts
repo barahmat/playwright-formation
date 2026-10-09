@@ -19,7 +19,7 @@ export const test = base.extend<MesFixtures>({
   pageConnectee: async ({ page }, use) => {
     const loginPage = new LoginPage(page);
     await loginPage.goto();
-    await loginPage.seConnecter('standard_user', 'secret_sauce');
+    await loginPage.seConnecter(process.env.USER_STANDARD ?? '', process.env.PASSWORD ?? '');
     await use(page);   // ici, le test démarre, déjà connecté
   },
 });
