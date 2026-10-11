@@ -36,6 +36,7 @@ import { defineBddConfig } from 'playwright-bdd';
     // baseURL: 'http://localhost:3000',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
+    baseURL: process.env.BASE_URL ?? 'https://www.saucedemo.com',
     trace: 'on-first-retry',
   },
 
