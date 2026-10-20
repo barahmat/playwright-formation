@@ -8,3 +8,4 @@ node_modules/
 /playwright/.auth/
 tests/*.feature.spec.js
 .env
+allure-results/
