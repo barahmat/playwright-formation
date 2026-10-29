@@ -30,7 +30,11 @@ import { defineBddConfig } from 'playwright-bdd';
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   //reporter: 'html',
-  reporter: [['html', { open: 'never' }], ['line'], ['allure-playwright']],
+  reporter: [
+    ['html', { open: 'never' }], 
+    ['line'], 
+    ['junit', { outputFile: 'test-results/junit.xml' }],   // ← le format que GitLab affiche nativement
+    ['allure-playwright']],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */

@@ -34,8 +34,9 @@ test('observer les requêtes réseau', async ({ page }) => {
 // });
 
 
-test.skip(true, 'QUARANTAINE : instable - en investigation, ticket #42');
+
 test('délibérément instable', async () => {
-  // 50 % de chances d'échouer - comme un vrai flaky, mais maîtrisé
+  test.skip(true, 'QUARANTAINE : instable - en investigation, ticket #42');
+
   expect(Math.random()).toBeGreaterThan(0.5);
 });
