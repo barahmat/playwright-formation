@@ -3,7 +3,7 @@ stages:
 
 tests-e2e:
   stage: tests
-  image: mcr.microsoft.com/playwright:v1.49-noble-node-20
+  image: mcr.microsoft.com/playwright:v1.63-noble-node-20
   script:
     - npm ci
     - npx bddgen
