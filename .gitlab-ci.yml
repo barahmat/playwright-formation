@@ -15,4 +15,4 @@ tests-e2e:
       - allure-results/
     reports:
       junit: test-results/junit.xml
-    expire_in: 7 jours
+    expire_in: 7 days
